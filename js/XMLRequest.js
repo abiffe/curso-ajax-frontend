@@ -1,4 +1,4 @@
-function users() {
+function usersXML() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -12,5 +12,7 @@ function users() {
         }
     };
     xhttp.open("GET", "http://192.168.100.6:8000/api/users", true);
+    xhttp.setRequestHeader("Accept", 'application/json');
+    xhttp.setRequestHeader("Authorization", 'Bearer '+ getCookie("token"));
     xhttp.send();
 }

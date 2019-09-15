@@ -1,47 +1,254 @@
 $(document).ready(function () {
-     cadastraUser();
+     //cadastraUser();
+     //login();
+     //cadastraUser("André", "andre6@biffe.com", "123456", "123456");
  });
 
- function datalhesUser() {
+ /**
+  * função para obter as inforções do usuário logado
+  * tem que informar o token de acesso
+  */
+ function detalhesUser() {
     $.ajax({
         url: "http://192.168.100.6:8000/api/details",
         type: "POST",
         dataType: "json",
         beforeSend: function (request) {
             request.setRequestHeader('Accept', 'application/json');
-            request.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU4ODc4YWRiNDBiZTIzYTJiMzNjMGIwM2Q1YTI5ZDcyMzg3MGE2NTViNTljNmU3MzE1YjFhMmU0NTk3YzE5OGYzYzc1NDFjMDIyMDc3OGJmIn0.eyJhdWQiOiIxIiwianRpIjoiZTg4NzhhZGI0MGJlMjNhMmIzM2MwYjAzZDVhMjlkNzIzODcwYTY1NWI1OWM2ZTczMTViMWEyZTQ1OTdjMTk4ZjNjNzU0MWMwMjIwNzc4YmYiLCJpYXQiOjE1Njg0ODU4ODIsIm5iZiI6MTU2ODQ4NTg4MiwiZXhwIjoxNjAwMTA4MjgyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.m6M9yf0C-YsoGfy0CHplK1pZcc5ZnFsFVEb3JFEGRQJAjLcuwl_u2BhJGYe6UbP3HOW7Eh5_feAa8eO9WFNdixtV9iPXsWDmbIIC_ICFMJJFVtF-X-ecdtiI5ByGY_Jc2dfNAH-IWzLFXpbxIRi9xutoneSx5KVz9C78yUAHXAEND0puEgORY4_vIt-i4zbZkwDLlJ-5EDorX1SYWtC9KcQ2OUmlfv-m1QAxKJ_L8CFYC2rvxyyK_QFna_x5XLHSE27wcFVVWEjI6c9udQNcOTD1ZnvgCW0sVN4CyW267znRHmSwhn8iy99oiKc1I_fA9-J5NHaOS_gcT3lVUZs1UHvM3QwdBsFM1EC1q4P2BIomctxpncsxUvuUKyo9nd_dzDUf-sABi1p7pTu_GyapgOPDTu8tlQA7TLKBaWjTy6qe5pUkTW-68Op37aOryhzZzIjklehBKsGOc-EEkhj-0bRkrGM9wyJ4k1jqCmOZQI1GlENjVvBYwvYAgZvRz2TSIqfTmeOgWiiv8YsO6t8sdyo1KpcZpbTOob1vNcGyOQdYOF5IlLWntyTS8UGc0d-bCbQJzXY5HQTSUgWEXnbv5W3IgCV09_TTJeg4Fb0VYhSxB8rv15-cqxYwcgvwtkzicFE8Yjl81AhfGcGAz0qUWMT1pcCTWV2jrxckG3Tj9KU');  
+            request.setRequestHeader('Authorization', 'Bearer '+ getCookie("token"));  
         },
         success: function (result) {
             console.log("Sucesso jQuery");
-            console.log(result);
+            console.log(result.success);
         },
         error: function (error) {
-            console.log(error);
+            console.log("Erro jQuery");
+            /**
+             * se o erro.status for != 0 então o servidor está up
+             */
+            if(error.status != 0){
+                console.log(error);
+            }
+            setTimeout(function (){
+                //se não informe time out
+                if(error.status == 0){
+                    console.log("TIME OUT");
+                }
+            }, 1500);
         }
-    }).fail(function () {
-        console.log("ERRO");
     });
  }
 
- function cadastraUser() {
+ /**
+  * função apra fazer o cadastro de um usuário
+  * 
+  * @param {string} name 
+  * @param {string} email 
+  * @param {string} password 
+  * @param {string} c_password 
+  */
+ function cadastraUser(name, email, password, c_password) {
     $.ajax({
         url: "http://192.168.100.6:8000/api/register",
         type: "POST",
         dataType: "json",
         data: {
-            name : "André",
-            email: "andre+biffe@biffe.com",
-            password: "123456",
-            c_password: "123456"
+            name : name,
+            email: email,
+            password: password,
+            c_password: c_password
         },
         success: function (result) {
-            console.log("Sucesso jQuery");
+            console.log("Sucesso Cadastro");
+            console.log("Result");
             console.log(result);
+            console.log(result.success.token);
+            document.cookie = 'token='+result.success.token;
         },
         error: function (error) {
-            let errors = error.responseJSON;
-            console.log(errors.error.email != null);
+            console.log("ERRO Cadastro");
+            /**
+             * se o erro.status for != 0 então o servidor está up
+             */
+            if(error.status != 0){
+                let errors = error.responseJSON;
+                if(errors.length != 0){
+                    console.log(errors.error);
+                }
+                console.log(error.status);
+            }
+            setTimeout(function (){
+                //se não informe time out
+                if(error.status == 0){
+                    console.log("TIME OUT");
+                }
+            }, 1500);
         }
     });
  }
+
+ /**
+  * função para fazer o login de um usuário
+  * 
+  * @param {string} user email 
+  * @param {string} password 
+  */
+ function login (user, password){
+     $.ajax({
+         url: "http://192.168.100.6:8000/api/login",
+         type: "POST",
+         dataType: "json",
+         data: {
+             email: user,
+             password: password
+         },
+     }).done(function(result){
+         console.log("Sucesso");
+         console.log(result);
+         console.log(result.success.token);
+        document.cookie = 'token='+result.success.token;
+     }).fail(function (error){
+        console.log("Erro");
+        console.log(error);
+        console.log(error.responseJSON.error);
+        console.log(error.status);
+     }).always(function(){
+         console.log("Always");
+     });
+ }
+
+ /**
+  * função para fazer logout
+  * tem que passar o token de acesso
+  */
+ function logout() {
+    $.ajax({
+        url: "http://192.168.100.6:8000/api/logout",
+        type: "POST",
+        dataType: "json",
+        beforeSend: function (request) {
+            request.setRequestHeader('Accept', 'application/json');
+            request.setRequestHeader('Authorization', 'Bearer '+ getCookie("token"));  
+        },
+        success: function (result) {
+            console.log("Sucesso jQuery");
+            console.log(result.message);
+        },
+        error: function (error) {
+            console.log("Erro jQuery");
+            /**
+             * se o erro.status for != 0 então o servidor está up
+             */
+            if(error.status != 0){
+                console.log(error.status);
+                console.log(error.responseJSON.message);
+            }
+            setTimeout(function (){
+                //se não informe time out
+                if(error.status == 0){
+                    console.log("TIME OUT");
+                }
+            }, 1500);
+        }
+    });
+ }
+ 
+ /**
+  * função para deletar um usuário a partir de seu id
+  * 
+  * @param {int} id 
+  */
+ function deleteUser(id) {
+    $.ajax({
+        url: "http://192.168.100.6:8000/api/delete",
+        type: "DELETE",
+        dataType: "json",
+        beforeSend: function (request) {
+            request.setRequestHeader('Accept', 'application/json');
+            request.setRequestHeader('Authorization', 'Bearer '+ getCookie("token"));  
+        },
+        data: {
+            id: id,
+        },
+        success: function (result) {
+            console.log("Sucesso jQuery");
+            console.log(result.message);
+        },
+        error: function (error) {
+            console.log("Erro jQuery");
+            /**
+             * se o erro.status for != 0 então o servidor está up
+             */
+            if(error.status != 0){
+                console.log(error.status);
+                console.log(error.responseJSON.error);
+            }
+            setTimeout(function (){
+                //se não informe time out
+                if(error.status == 0){
+                    console.log("TIME OUT");
+                }
+            }, 1500);
+        }
+    });
+ }
+
+ /**
+  * função para obter os usuários
+  * tem que passar o token de acesso
+  */
+ function users() {
+    $.ajax({
+        url: "http://192.168.100.6:8000/api/users",
+        type: "GET",
+        dataType: "json",
+        beforeSend: function (request) {
+            request.setRequestHeader('Accept', 'application/json');
+            request.setRequestHeader('Authorization', 'Bearer '+ getCookie("token"));  
+        },
+        success: function (result, textStatus, xhr) {
+            console.log("Sucesso jQuery");
+            console.log(xhr);
+            console.log(result.users);
+        },
+        complete: function (xhr) {
+            console.log(xhr);
+        },
+        error: function (error) {
+            console.log("Erro jQuery");
+            /**
+             * se o erro.status for != 0 então o servidor está up
+             */
+            if(error.status != 0){
+                console.log(error);
+            }
+            setTimeout(function (){
+                //se não informe time out
+                if(error.status == 0){
+                    console.log("TIME OUT");
+                }
+            }, 1500);
+        }
+    });
+ }
+
+ /**
+  * obter um token armazenado no cookie
+  * @param {string} cname 
+  */
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
  
