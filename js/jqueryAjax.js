@@ -1,7 +1,7 @@
 $(document).ready(function () {
      //cadastraUser();
      //login();
-     //cadastraUser("André", "andre6@biffe.com", "123456", "123456");
+     cadastraUser("André", "andre6@biffe.com", "123456", "123456");
  });
 
  /**
@@ -10,7 +10,7 @@ $(document).ready(function () {
   */
  function detalhesUser() {
     $.ajax({
-        url: "http://192.168.100.6:8000/api/details",
+        url: "http://192.168.56.110:8000/api/details",
         type: "POST",
         dataType: "json",
         beforeSend: function (request) {
@@ -49,7 +49,7 @@ $(document).ready(function () {
   */
  function cadastraUser(name, email, password, c_password) {
     $.ajax({
-        url: "http://192.168.100.6:8000/api/register",
+        url: "http://192.168.56.110:8000/api/register",
         type: "POST",
         dataType: "json",
         data: {
@@ -95,7 +95,7 @@ $(document).ready(function () {
   */
  function login (user, password){
      $.ajax({
-         url: "http://192.168.100.6:8000/api/login",
+         url: "http://192.168.56.110:8000/api/login",
          type: "POST",
          dataType: "json",
          data: {
@@ -123,7 +123,7 @@ $(document).ready(function () {
   */
  function logout() {
     $.ajax({
-        url: "http://192.168.100.6:8000/api/logout",
+        url: "http://192.168.56.110:8000/api/logout",
         type: "POST",
         dataType: "json",
         beforeSend: function (request) {
@@ -160,7 +160,7 @@ $(document).ready(function () {
   */
  function deleteUser(id) {
     $.ajax({
-        url: "http://192.168.100.6:8000/api/delete",
+        url: "http://192.168.56.110:8000/api/delete",
         type: "DELETE",
         dataType: "json",
         beforeSend: function (request) {
@@ -199,7 +199,7 @@ $(document).ready(function () {
   */
  function users() {
     $.ajax({
-        url: "http://192.168.100.6:8000/api/users",
+        url: "http://192.168.56.110:8000/api/users",
         type: "GET",
         dataType: "json",
         beforeSend: function (request) {
