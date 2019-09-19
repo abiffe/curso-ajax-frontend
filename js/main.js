@@ -99,7 +99,6 @@ function removeContador() {
 function mostraSenha() {
     let password = $("#password");
     password.on("mouseenter mouseleave", function (e) {
-        console.log(e);
         if($(e).attr("type") == "mouseenter"){
             password.attr("type", "text");
         }

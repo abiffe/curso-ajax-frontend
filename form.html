@@ -70,11 +70,11 @@
         <!-- Begin page content -->
         <main role="main" class="flex-shrink-0">
             <div class="container">
-                    <form class="pt-5 mt-5">
+                    <form id="cadastro" class="pt-5 mt-5">
                         <div class="form-row">
                             <div class="col-md-4 mb-3">
                                 <label for="name">Nome</label>
-                                <input type="text" class="form-control is-valid" id="name" placeholder="Nome" value="Mark" required>
+                                <input type="text" class="form-control is-valid" id="name" placeholder="Nome" value="">
                                 <div class="valid-feedback">
                                     Certo!
                                 </div>
@@ -85,24 +85,18 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="inputGroupPrepend3">@</span>
                                     </div>
-                                    <input type="email" class="form-control is-invalid" id="email" placeholder="Email" aria-describedby="inputGroupPrepend3" required>
-                                    <div class="invalid-feedback">
-                                        Informe um Email Valido.
-                                    </div>
+                                    <input type="email" class="form-control" id="email" placeholder="Email" aria-describedby="inputGroupPrepend3">
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-md-4 mb-3">
                                 <label for="password">Senha</label>
-                                <input type="password" class="form-control is-invalid" id="password" placeholder="Senha" required>
-                                <div class="invalid-feedback">
-                                    Informe uma Senha válida.
-                                </div>
+                                <input type="password" class="form-control" id="password" placeholder="Senha">
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="c_password">Confime a Senha</label>
-                                <input type="password" class="form-control is-invalid" id="c_password" placeholder="Confime a Senha" required>
+                                <input type="password" class="form-control is-invalid" id="c_password" placeholder="Confime a Senha">
                                 <div class="invalid-feedback">
                                     Informe uma Senha válida.
                                 </div>
@@ -110,14 +104,14 @@
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input is-invalid" id="accept" required>
+                                <input type="checkbox" class="custom-control-input is-invalid" id="accept">
                                 <label class="custom-control-label" for="accept">Aceito os termos e condições</label>
                                 <div class="invalid-feedback">
                                     Você deve aceitar os termos e condições
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" type="submit">Cadastrar</button>
+                        <button class="btn btn-primary">Cadastrar</button>
                     </form>
             </div>
         </main>
@@ -128,5 +122,6 @@
             </div>
         </footer>
         <script src="js/main.js"></script>
+        <script src="js/ajaxjquery.js"></script>
     </body>
 </html>
