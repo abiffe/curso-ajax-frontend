@@ -94,7 +94,7 @@ function removeContador() {
     });
 }
  /**
-  * função para mostrar a senha
+  * função para mostrar a senha quando o mouse entrar no e deixar invivel quando sair do campo
   */
 function mostraSenha() {
     let password = $("#password");
@@ -106,13 +106,5 @@ function mostraSenha() {
         if($(e).attr("type") == "mouseleave"){
             password.attr("type", "password");
         }
-        /*if(password.attr("type") == "password"){
-            password.attr("type", "text");
-        }else{
-            password.attr("type", "password");
-        }*/
-        /*setInterval(function () {
-            password.attr("type", "password");
-        }, 2000);*/
     });
 }
