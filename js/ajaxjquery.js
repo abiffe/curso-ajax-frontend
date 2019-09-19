@@ -1,5 +1,6 @@
 $(document).ready(function () {
-   //cadastraUser("André", "andre@biffe.com", "123456", "123456"); 
+   cadastroEvent();
+   loginEvent();
 });
 
 /**
@@ -60,13 +61,24 @@ $(document).ready(function () {
     });
 }
 
-$("#cadastro").on("submit", function (e) {
-    e.preventDefault();
-    //console.log($(this.name).val());
-    cadastraUser($(this.name).val(),$(this.email).val(),
-    $(this.password).val(), $(this.c_password).val());
-});
+/**
+ * função para adicionar um evento de submit em um formulário com id cadastro
+ */
+function cadastroEvent() {
+    $("#cadastro").on("submit", function (e) {
+        e.preventDefault();
+        console.log($(this.submit));
+        cadastraUser($(this.name).val(),$(this.email).val(),
+        $(this.password).val(), $(this.c_password).val());
+    });   
+}
 
+/**
+ * função para fazer um login ajax
+ * 
+ * @param {string} usuario 
+ * @param {string} senha 
+ */
 function login(usuario, senha) {
     $.ajax({
         url: "http://10.144.13.124:8000/api/login",
@@ -88,7 +100,12 @@ function login(usuario, senha) {
     });
 }
 
-$("#login").on("submit", function (e) {
-    e.preventDefault();
-    login($(this.email).val(), $(this.password).val());
-})
+/**
+ * função para adicionar um evento de submit em um formulário com id login
+ */
+function loginEvent() {
+    $("#login").on("submit", function (e) {
+        e.preventDefault();
+        login($(this.email).val(), $(this.password).val());
+    });   
+}
